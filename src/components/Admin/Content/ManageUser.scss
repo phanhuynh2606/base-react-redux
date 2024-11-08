@@ -1,4 +1,28 @@
-
+.manage-user-container{
+  padding: 10px;
+  .users-content{
+    .btn-add-new{
+      button{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 3px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover{
+          background: #0056b3;
+        }
+      }
+    }
+  }
+  .title{
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
 .model-add-user{
   .img-preview{
     border: 1px dashed #ccc;
