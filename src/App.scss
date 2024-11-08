@@ -11,10 +11,41 @@ body {
 }
 
 .app-container {
+  
   .header-container {
-    .navbar-nav {
+    background-color: rgba(0, 0, 0, 0);
+    // position: absolute;
+    // top: 0;
+    // width: 100%;
+    // z-index: 10; 
+    .btn-login{
+      border-radius: 7px;
+      margin-right: 15px;
+      padding: 0 15px;
+      border: 1px solid #252525;
+      height: 40px;
+      min-width: 90px;
+      &:hover {
+        background-color: #fff;
+        color: #000;
+      }
+    }
+    .btn-signup{
+      border-radius: 7px;
+      padding: 0 15px;
+      border: 1px solid #0d0d0dfc;
+      background-color: rgba(0, 0, 0, 0.713);
+      color: #fff;
+      height: 40px;
+      min-width: 90px;
+      &:hover {
+        background-color: #000;
+      }
+    }
+    .navbar {
+      padding-top: 20px;
       z-index: 10;
-      opacity: 0.6;
+      background-color:transparent !important;
       .nav-link {
         &.active {
           color: #217ee1cf;
@@ -22,10 +53,52 @@ body {
       }
     }
   }
+  .homepage-container{
+    .homepage-content{
+      width: 50%;
+      padding: 120px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      .title-1{
+        font-size: 40px;
+        font-weight: 600;
+      }
+      .title-2{
+        font-size: 22px;
+      }
+      .title-action{
+        button{
+        border-radius: 7px;
+        padding: 0 15px;
+        border: 1px solid #0d0d0dfc;
+        background-color: rgba(0, 0, 0, 0.713);
+        color: #fff;
+        height: 40px;
+        min-width: 90px;
+        &:hover {
+          background-color: #000;
+        }
+      }
+      }
+    }
+  }
 }
 
-video{
+.homepage-container video{
   position: fixed;
-  bottom: 1;
+  bottom: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+@media (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+      max-width: 1250px !important;
+  }
 }
