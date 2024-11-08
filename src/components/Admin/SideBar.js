@@ -7,10 +7,12 @@ import {
   SidebarFooter,
   SidebarContent,
 } from 'react-pro-sidebar';
-import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } from 'react-icons/fa';
+import "./SideBar.scss";
+import { FaGem, FaGithub, } from 'react-icons/fa';
 import "react-pro-sidebar/dist/scss/styles.scss";
 import sidebarBg from '../../assets/bg2.jpg';
-
+import { DiReact } from "react-icons/di";
+import { MdDashboard } from "react-icons/md";
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
@@ -34,52 +36,28 @@ const SideBar = (props) => {
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           }}
-        >
-        Huynh Phan
+        > <DiReact size={'3em'} color={'#00bfff'}/>
+          <span>Huynh Phan</span>
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         <Menu iconShape="circle">
           <MenuItem
-            icon={<FaTachometerAlt />}
-            suffix={<span className="badge red">New</span>}
+            icon={<MdDashboard />}
           >
             Dashboard
           </MenuItem>
-          <MenuItem icon={<FaGem />}> components</MenuItem>
         </Menu>
         <Menu iconShape="circle">
           <SubMenu
-            suffix={<span className="badge yellow">3</span>}
-            icon={<FaRegLaughWink />}
+            icon={<FaGem />}
+            title={"Features"}
           >
-            <MenuItem> 1</MenuItem>
-            <MenuItem> 2</MenuItem>
-            <MenuItem> 3</MenuItem>
+            <MenuItem> Quản lý users</MenuItem>
+            <MenuItem> Quản lý bài Quiz</MenuItem>
+            <MenuItem> Quản lý câu hỏi</MenuItem>
           </SubMenu>
-          {/* <SubMenu
-            prefix={<span className="badge gray">3</span>}
-            title={intl.formatMessage({ id: 'withPrefix' })}
-            icon={<FaHeart />}
-          >
-            <MenuItem>{intl.formatMessage({ id: 'submenu' })} 1</MenuItem>
-            <MenuItem>{intl.formatMessage({ id: 'submenu' })} 2</MenuItem>
-            <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3</MenuItem>
-          </SubMenu>
-          <SubMenu title={intl.formatMessage({ id: 'multiLevel' })} icon={<FaList />}>
-            <MenuItem>{intl.formatMessage({ id: 'submenu' })} 1 </MenuItem>
-            <MenuItem>{intl.formatMessage({ id: 'submenu' })} 2 </MenuItem>
-            <SubMenu title={`${intl.formatMessage({ id: 'submenu' })} 3`}>
-              <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3.1 </MenuItem>
-              <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3.2 </MenuItem>
-              <SubMenu title={`${intl.formatMessage({ id: 'submenu' })} 3.3`}>
-                <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3.3.1 </MenuItem>
-                <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3.3.2 </MenuItem>
-                <MenuItem>{intl.formatMessage({ id: 'submenu' })} 3.3.3 </MenuItem>
-              </SubMenu>
-            </SubMenu>
-          </SubMenu> */}
         </Menu>
       </SidebarContent>
 
@@ -98,7 +76,7 @@ const SideBar = (props) => {
           >
             <FaGithub />
             <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-              viewSource
+              SideBar Pro
             </span>
           </a>
         </div>
