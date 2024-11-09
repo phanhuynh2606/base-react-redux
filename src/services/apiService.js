@@ -27,6 +27,9 @@ const  putUpdateUser = async (id,username,role,image) => {
 }
 
 const deleteUser = async (userId) => {
-  return await axios.delete(`api/v1/participant`,{data:{id:userId}});
+  return await axios.delete(`api/v1/participant`,{data: {id:userId}});
 }
-export {postCreateUser, getAllUsers,putUpdateUser,deleteUser,getUsersWithPaginate};
+const postLogin = async (email,password) => {
+  return await axios.post("api/v1/login",{email,password});
+}
+export {postCreateUser, getAllUsers,putUpdateUser,deleteUser,getUsersWithPaginate,postLogin};

@@ -3,10 +3,19 @@
   .header{
     text-align: right;
     height: 45px;
-    border: 1px solid #ccc;
-    vertical-align: middle;
-    line-height: 40px;
-    padding-right: 20px;
+    padding: 5px 40px 0 100px;
+    button{
+      margin-left: 15px;
+      border-radius: 5px;
+      background: #f6f4f4;
+      padding: 5px 13px;
+      font-size: 15px;
+      border: 1px solid;;
+      color: #000000;
+      &:hover{
+        background: #ffffff;
+      }
+    }
   }
   .title{
     text-align: center;
@@ -33,6 +42,11 @@
     }
     .forgot-password{
       font-size: 15px;
+      color: #726f6f;
+      cursor: pointer;
+      &:hover{
+        text-decoration: underline;
+      }
     }
     button{
       width: 100%;
@@ -44,6 +58,12 @@
       &:hover{
         background: #000000;
       }
+    }
+  }
+  .back{
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline;
     }
   }
 }
