@@ -1,6 +1,30 @@
+import { toast } from "react-toastify";
+import { deleteUser } from "../../../services/apiService";
+import Swal from "sweetalert2";
 
 const TableUser = (props) => {
-  const { listUsers } = props;
+  const { listUsers,fetchListUsers } = props;
+  const handleDelete = async (user) => {
+    Swal.fire({
+      title: "Are you sure delete?",
+      text: `You will detele user has email: ${user && user.email ?user.email:""}`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await deleteUser(user.id);
+        if(res && res.EC === 0){
+          toast.success(res.EM);
+          await fetchListUsers();
+        }else{
+          toast.error(res.EM);
+        }
+      }
+    });
+  };
   return (
     <>
       <table className="table table-hover table-bordered">
@@ -14,27 +38,44 @@ const TableUser = (props) => {
           </tr>
         </thead>
         <tbody>
-          {listUsers &&
-            listUsers.length > 0 ?
+          {listUsers && listUsers.length > 0 ? (
             listUsers.map((user, index) => {
               return (
                 <tr key={`table-user-${index}`}>
-                  <th scope="row">{index+1}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="btn btn-secondary btn-sm">View</button>
-                    <button className="btn btn-warning btn-sm mx-2" onClick={() => props.handleShowModalUpdate(user)}>Update</button>
-                    <button className="btn btn-danger btn-sm">Delete</button>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => props.handleShowModalView(user)}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm mx-2"
+                      onClick={() => props.handleShowModalUpdate(user)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(user)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
-            }) : (
-              <tr>
-                <td colSpan="4" className="text-center fs-4 fw-light">Not found data 😢</td>
-              </tr>
-            )}
+            })
+          ) : (
+            <tr>
+              <td colSpan="4" className="text-center fs-4 fw-light">
+                Not found data 😢
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </>

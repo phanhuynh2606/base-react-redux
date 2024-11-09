@@ -15,7 +15,7 @@ import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
 import { Link, NavLink } from 'react-router-dom';
 const SideBar = (props) => {
-  const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const { collapsed, toggled, handleToggleSidebar } = props;
   return (
     <>
        <ProSidebar
