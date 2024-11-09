@@ -3,19 +3,13 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { FaPlusCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiService";
+import { putUpdateUser } from "../../../services/apiService";
 import _ from "lodash";
 const ModalUpdateUser = (props) => {
   const {show,setShow,fetchListUsers,userUpdate} = props;
 
   const handleClose = () => {
     setShow(false);
-    setEmail("");
-    setPassword("");
-    setUsername("");
-    setRole("USER");
-    setImage("");
-    setPreviewImage("");
   };
   // const handleShow = () => setShow(true);
   const [email, setEmail] = useState("");
@@ -47,13 +41,9 @@ const ModalUpdateUser = (props) => {
 
   //submit dataform
   const handleSubmitUpdateUser = async () => {
-    if(!password){
-      toast.error('Password is required!');
-      return;
-    }
     
-    // call API create user
-    let data = await postCreateUser(email,password,username,role,image);
+    // call API update user
+    let data = await putUpdateUser(userUpdate.id,username,role,image);
     if(data && data.EC === 0){
       toast.success(data.EM);
       handleClose();
@@ -95,6 +85,7 @@ const ModalUpdateUser = (props) => {
                 className="form-control"
                 value={password}
                 disabled
+                placeholder="Password was hidden"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
