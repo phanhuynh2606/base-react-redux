@@ -3,12 +3,16 @@ import "./ManageUser.scss";
 import 'sweetalert2/src/sweetalert2.scss'
 import { FaPlusCircle } from "react-icons/fa";
 import { useState,useEffect } from "react";
-import TableUser from "./TableUser";
-import { getAllUsers } from "../../../services/apiService";
+import { getAllUsers, getUsersWithPaginate } from "../../../services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalViewUser from "./ModalViewUser";
+import TableUserPaginate from "./TableUserPaginate";
 
 const ManagerUser = (props) => {
+  const LIMIT_USER = 4;
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [showModalCreate, setshowModalCreate] = useState(false);
   const [showModalUpdate, setshowModalUpdate] = useState(false);
   const [showModalView, setshowModalView] = useState(false);
@@ -21,8 +25,15 @@ const ManagerUser = (props) => {
       setListUsers(res.DT);
     }
   };
+  const fetchListUsersWithPaginate = async (page) => {
+    let res = await getUsersWithPaginate(page, LIMIT_USER);
+    if (res && res.EC === 0) {
+      setPageCount(res.DT.totalPages);
+      setListUsers(res.DT.users);
+    }
+  };
   useEffect(() => {
-    fetchListUsers();
+    fetchListUsersWithPaginate(1);
   }, []);
 
   const handleShowModalUpdate = (user) => {
@@ -44,14 +55,31 @@ const ManagerUser = (props) => {
           <button onClick={() => setshowModalCreate(true)}> <FaPlusCircle/> Add New User</button>
         </div>
         <div className="table-users-container">
-          <TableUser listUsers={listUsers}
+          <TableUserPaginate listUsers={listUsers}
            handleShowModalUpdate={handleShowModalUpdate} 
            handleShowModalView={handleShowModalView}
-           fetchListUsers={fetchListUsers}
+           fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+           pageCount={pageCount}
+           currentPage={currentPage}
+           setCurrentPage={setCurrentPage}
            />
         </div>
-        <ModalCreateUser show={showModalCreate} setShow={setshowModalCreate} fetchListUsers={fetchListUsers}/>
-        <ModalUpdateUser show={showModalUpdate} setShow={setshowModalUpdate} userUpdate={dataUpdate} fetchListUsers={fetchListUsers} />
+        <ModalCreateUser 
+          show={showModalCreate} 
+          setShow={setshowModalCreate} 
+          fetchListUsers={fetchListUsers}
+          fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          />
+        <ModalUpdateUser 
+          show={showModalUpdate} 
+          setShow={setshowModalUpdate} userUpdate={dataUpdate} 
+          fetchListUsers={fetchListUsers} 
+          fetchListUsersWithPaginate={fetchListUsersWithPaginate}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          />
         <ModalViewUser show={showModalView} setShow={setshowModalView} userView={dataUpdate}/>
       </div>
     </div>
