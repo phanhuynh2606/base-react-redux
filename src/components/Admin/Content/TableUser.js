@@ -25,7 +25,7 @@ const TableUser = (props) => {
                   <td>{user.role}</td>
                   <td>
                     <button className="btn btn-secondary btn-sm">View</button>
-                    <button className="btn btn-warning btn-sm mx-2">Update</button>
+                    <button className="btn btn-warning btn-sm mx-2" onClick={() => props.handleShowModalUpdate(user)}>Update</button>
                     <button className="btn btn-danger btn-sm">Delete</button>
                   </td>
                 </tr>

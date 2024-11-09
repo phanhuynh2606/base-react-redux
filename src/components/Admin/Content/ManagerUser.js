@@ -4,9 +4,12 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useState,useEffect } from "react";
 import TableUser from "./TableUser";
 import { getAllUsers } from "../../../services/apiService";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const ManagerUser = (props) => {
-  const [show, setShow] = useState(false);
+  const [showModalCreate, setshowModalCreate] = useState(false);
+  const [showModalUpdate, setshowModalUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
   const [listUsers, setListUsers] = useState([]);
 
   const fetchListUsers = async () => {
@@ -19,6 +22,11 @@ const ManagerUser = (props) => {
     fetchListUsers();
   }, []);
 
+  const handleShowModalUpdate = (user) => {
+    setshowModalUpdate(true);
+    setDataUpdate(user);
+  };
+
   return (
     <div className="manage-user-container">
       <div className="title">
@@ -26,12 +34,13 @@ const ManagerUser = (props) => {
       </div>
       <div className="users-content">
         <div className="btn-add-new mb-2">
-          <button onClick={() => setShow(true)}> <FaPlusCircle/> Add New User</button>
+          <button onClick={() => setshowModalCreate(true)}> <FaPlusCircle/> Add New User</button>
         </div>
         <div className="table-users-container">
-          <TableUser listUsers={listUsers}/>
+          <TableUser listUsers={listUsers} handleShowModalUpdate={handleShowModalUpdate}/>
         </div>
-        <ModalCreateUser show={show} setShow={setShow} fetchListUsers={fetchListUsers}/>
+        <ModalCreateUser show={showModalCreate} setShow={setshowModalCreate} fetchListUsers={fetchListUsers}/>
+        <ModalUpdateUser show={showModalUpdate} setShow={setshowModalUpdate} userUpdate={dataUpdate} />
       </div>
     </div>
   );
