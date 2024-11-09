@@ -1,19 +1,6 @@
-import { useEffect, useState } from "react";
-import { getAllUsers } from "../../../services/apiService";
 
 const TableUser = (props) => {
-  const [listUsers, setListUsers] = useState([]);
-
-  const fetchListUsers = async () => {
-    let res = await getAllUsers();
-    if (res && res.EC === 0) {
-      setListUsers(res.DT);
-    }
-  };
-  useEffect(() => {
-    fetchListUsers();
-  }, []);
-
+  const { listUsers } = props;
   return (
     <>
       <table className="table table-hover table-bordered">

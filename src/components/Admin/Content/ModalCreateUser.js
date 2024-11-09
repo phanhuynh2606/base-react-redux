@@ -5,7 +5,7 @@ import { FaPlusCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { postCreateUser } from "../../../services/apiService";
 const ModalCreateUser = (props) => {
-  const {show,setShow} = props;
+  const {show,setShow,fetchListUsers} = props;
 
   const handleClose = () => {
     setShow(false);
@@ -57,6 +57,7 @@ const ModalCreateUser = (props) => {
     if(data && data.EC === 0){
       toast.success(data.EM);
       handleClose();
+      await fetchListUsers();
     }
     if(data && data.EC !== 0){
       toast.error(data.EM);
