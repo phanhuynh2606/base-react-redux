@@ -9,7 +9,7 @@ import ModalViewUser from "./ModalViewUser";
 import TableUserPaginate from "./TableUserPaginate";
 
 const ManagerUser = (props) => {
-  const LIMIT_USER = 4;
+  const LIMIT_USER = 5;
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
