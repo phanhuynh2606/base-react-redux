@@ -32,4 +32,7 @@ const deleteUser = async (userId) => {
 const postLogin = async (email,password) => {
   return await axios.post("api/v1/login",{email,password});
 }
-export {postCreateUser, getAllUsers,putUpdateUser,deleteUser,getUsersWithPaginate,postLogin};
+const postRegister = async (email,password,username) => {
+  return await axios.post("api/v1/register",{email,password,username});
+}
+export {postCreateUser, getAllUsers,putUpdateUser,deleteUser,getUsersWithPaginate,postLogin,postRegister};

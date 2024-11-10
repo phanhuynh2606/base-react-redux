@@ -48,6 +48,15 @@
         text-decoration: underline;
       }
     }
+    .field-password{
+      position: relative;
+      .eye{
+        position: absolute;
+        right: 20px;
+        top: calc(50% - 2px);
+        cursor: pointer;
+      }
+    }
     button{
       width: 100%;
       color: white;
@@ -58,6 +67,10 @@
       &:hover{
         background: #000000;
       }
+    }
+    .required{
+      color: red;
+      font-size: 17px;
     }
   }
   .back{
