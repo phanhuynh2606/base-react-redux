@@ -1,5 +1,23 @@
 
 .login-container{
+  .action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .loader-icon{
+    margin-right: 9px;
+    top: 2px;
+    animation: spin 1s infinite linear;
+}
+  @keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
   .header{
     text-align: right;
     height: 45px;
@@ -64,8 +82,15 @@
       outline: none;
       border: none;
       margin-top: 15px;
+      padding: 8px;
+      border-radius: 5px;
       &:hover{
         background: #000000;
+      }
+      &:disabled{
+        background: #6c6868c7;
+        cursor: no-drop!important;
+        
       }
     }
     .required{

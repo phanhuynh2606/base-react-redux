@@ -4,12 +4,14 @@ import { IoMdArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { FaSpinner } from "react-icons/fa6";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,11 +34,13 @@ const Login = (props) => {
       toast.error("Password is invalid");
       return;
     }
+    setLoading(true);
     // submit API
     const res = await postLogin(email, password);
     if (res && res.EC === 0) {
       dispatch(doLogin(res));
       toast.success(res.EM);
+      setLoading(false);
       navigate("/");
     }
     if (res && res.EC !== 0) {
@@ -49,7 +53,7 @@ const Login = (props) => {
       <div className="login-container">
         <div className="header">
           <span>Don't have an account?</span>
-          <button onClick={() => navigate('/signup')} >Sign up</button>
+          <button onClick={() => navigate("/signup")}>Sign up</button>
         </div>
         <div className="title col-4 mx-auto">Quiz</div>
         <div className="welcome col-4 mx-auto">Hello, Who's this?</div>
@@ -79,10 +83,14 @@ const Login = (props) => {
           </div>
           <div className="form-group">
             <button
-              className="btn btn-outline-primary"
+              className="btn-submit"
               onClick={() => handleLogin()}
+              disabled={loading}
             >
-              Login to Quiz
+              <div className="action">
+                {loading &&<FaSpinner className="loader-icon" size={18}/>}
+                <span>Login to Quiz</span>
+              </div>
             </button>
           </div>
           <div className="back">

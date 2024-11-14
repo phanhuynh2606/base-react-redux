@@ -30,7 +30,7 @@ const deleteUser = async (userId) => {
   return await axios.delete(`api/v1/participant`,{data: {id:userId}});
 }
 const postLogin = async (email,password) => {
-  return await axios.post("api/v1/login",{email,password});
+  return await axios.post("api/v1/login",{email,password,delay:2000});
 }
 const postRegister = async (email,password,username) => {
   return await axios.post("api/v1/register",{email,password,username});
