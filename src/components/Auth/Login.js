@@ -4,11 +4,15 @@ import { IoMdArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { postLogin } from "../../services/apiService";
 import { toast } from "react-toastify";
+import {useDispatch} from 'react-redux';
+import { doLogin } from "../../redux/action/userAction";
+
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateEmail = (email) => {
     return String(email)
@@ -31,6 +35,7 @@ const Login = (props) => {
     // submit API
     const res = await postLogin(email, password);
     if (res && res.EC === 0) {
+      dispatch(doLogin(res));
       toast.success(res.EM);
       navigate("/");
     }

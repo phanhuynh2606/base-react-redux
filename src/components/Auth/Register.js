@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Login.scss";
 import { IoMdArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { postLogin, postRegister } from "../../services/apiService";
+import {  postRegister } from "../../services/apiService";
 import { toast } from "react-toastify";
 import { VscEye,VscEyeClosed  } from "react-icons/vsc";
 const Register = (props) => {
