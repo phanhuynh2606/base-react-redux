@@ -10,7 +10,6 @@ NProgress.configure({
   showSpinner: false,
   // easing: 'ease',
   // speed: 500,
-  color: '#FFF',
   trickleSpeed: 100});
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
