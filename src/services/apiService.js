@@ -35,4 +35,11 @@ const postLogin = async (email,password) => {
 const postRegister = async (email,password,username) => {
   return await axios.post("api/v1/register",{email,password,username});
 }
-export {postCreateUser, getAllUsers,putUpdateUser,deleteUser,getUsersWithPaginate,postLogin,postRegister};
+
+const getQuizByUser = async (userId) => {
+  return await axios.get(`api/v1/quiz-by-participant`);
+}
+export {postCreateUser, getAllUsers
+        ,putUpdateUser,deleteUser
+        ,getUsersWithPaginate,postLogin,postRegister
+        ,getQuizByUser};

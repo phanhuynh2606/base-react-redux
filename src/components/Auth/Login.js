@@ -44,6 +44,7 @@ const Login = (props) => {
       navigate("/");
     }
     if (res && res.EC !== 0) {
+      setLoading(false);
       toast.error(res.EM);
     }
   };

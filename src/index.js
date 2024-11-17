@@ -7,12 +7,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import "nprogress/nprogress.css";
-import { PersistGate } from 'redux-persist/integration/react'
+import {PersistGate} from 'redux-persist/integration/react'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={null} persistor={persistor}>
     {/* <React.StrictMode> */}
     <BrowserRouter>
       <Layout />
