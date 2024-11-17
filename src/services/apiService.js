@@ -36,10 +36,13 @@ const postRegister = async (email,password,username) => {
   return await axios.post("api/v1/register",{email,password,username});
 }
 
-const getQuizByUser = async (userId) => {
+const getQuizByUser = async () => {
   return await axios.get(`api/v1/quiz-by-participant`);
+}
+const getDataQuiz = async (quizId) => {
+  return await axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
 }
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
-        ,getQuizByUser};
+        ,getQuizByUser,getDataQuiz};
