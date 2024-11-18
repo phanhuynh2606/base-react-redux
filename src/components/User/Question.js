@@ -2,7 +2,6 @@ import _ from "lodash";
 
 const Question = (props) => {
   const { data, index,handleCheckBox } = props;
-  console.log(data);
   if (_.isEmpty(data)) {
     return <div>Loading...</div>;
   }

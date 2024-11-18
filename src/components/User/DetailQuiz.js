@@ -65,6 +65,21 @@ const DetailQuiz = (props) => {
     setDataQuiz(dataQuizClone);
 
   }
+  const handleFinishQuiz = () => {
+    let payload = {};
+    if(dataQuiz && dataQuiz.length > 0){
+      payload = {
+        quizId: +quizId,
+        answers: dataQuiz.map((item) => {
+          return {
+            questionId: +item.questionId,
+            userAnswerId: item.answers.filter((answer) => answer.isSelected).map((answer) => answer.id)
+          }
+        })
+      }
+    }
+    console.log(payload);
+  }
 
   return (
     <>
@@ -98,7 +113,7 @@ const DetailQuiz = (props) => {
             </button>
             <button
               className="btn btn-warning ms-4"
-              onClick={() => handleNext()}
+              onClick={() => handleFinishQuiz()}
             >
               Finish
             </button>
