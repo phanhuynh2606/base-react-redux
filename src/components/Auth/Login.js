@@ -48,6 +48,11 @@ const Login = (props) => {
       toast.error(res.EM);
     }
   };
+  document.addEventListener("keydown",(e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  });
 
   return (
     <>
