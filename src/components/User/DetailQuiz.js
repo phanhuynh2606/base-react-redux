@@ -33,6 +33,7 @@ const DetailQuiz = (props) => {
               questionDescription = item.description;
               image = item.image;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
           return { questionId: key, answers, questionDescription, image };
@@ -51,6 +52,20 @@ const DetailQuiz = (props) => {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
+
+  const handleCheckBox = (answerId, questionId) => {
+    let dataQuizClone = _.cloneDeep(dataQuiz);
+    let question = dataQuizClone.find((item) => +item.questionId === +questionId);
+    if(question && question.answers){
+      let answer = question.answers.find((item) => +item.id === +answerId);
+      if(answer){
+        answer.isSelected = !answer.isSelected;
+      }
+    }
+    setDataQuiz(dataQuizClone);
+
+  }
+
   return (
     <>
       <div className="detail-quiz-container">
@@ -62,6 +77,7 @@ const DetailQuiz = (props) => {
           <div className="q-content">
             <Question
               index={currentQuestion}
+              handleCheckBox={handleCheckBox}
               data={
                 dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : []
               }
@@ -79,6 +95,12 @@ const DetailQuiz = (props) => {
               onClick={() => handleNext()}
             >
               Next
+            </button>
+            <button
+              className="btn btn-warning ms-4"
+              onClick={() => handleNext()}
+            >
+              Finish
             </button>
           </div>
         </div>

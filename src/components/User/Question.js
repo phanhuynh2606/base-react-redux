@@ -1,18 +1,25 @@
 import _ from "lodash";
 
 const Question = (props) => {
-  const { data, index } = props;
+  const { data, index,handleCheckBox } = props;
   console.log(data);
   if (_.isEmpty(data)) {
     return <div>Loading...</div>;
   }
+
+  const handleOnchangeCheckBox = (e,answerId,questionId) => {
+    handleCheckBox(answerId,questionId);
+  }
+
   return (
     <>
-    {data.image && <div className="q-image">
+    {data.image ? 
+    <div className="q-image">
         <img
           src={`data:image/jpeg;base64,${data.image}`}
           className="card-img-top"
         />
+      </div> : <div className="q-image">
       </div>}
       
       <div className="question">
@@ -27,10 +34,11 @@ const Question = (props) => {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
                   id={`a-${index}`}
+                  checked={answer.isSelected}
+                  onChange={(e) =>handleOnchangeCheckBox(e,answer.id,data.questionId)}
                 />
-                <label className="form-check-label" htmlFor={`a-${index}`}>
+                <label className="form-check-label ms-1" htmlFor={`a-${index}`}>
                   {answer.description}
                 </label>
               </div>
