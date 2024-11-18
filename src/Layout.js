@@ -1,5 +1,4 @@
 import App from "./App";
-import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
 import HomePage from "./components/Home/HomePage";
 import ManagerUser from "./components/Admin/Content/ManagerUser";
