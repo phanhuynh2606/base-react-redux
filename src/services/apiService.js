@@ -42,7 +42,11 @@ const getQuizByUser = async () => {
 const getDataQuiz = async (quizId) => {
   return await axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
 }
+const postSubmitQuiz = async (payload) => {
+  console.log({...payload});
+  return await axios.post(`api/v1/quiz-submit`,{...payload});
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
-        ,getQuizByUser,getDataQuiz};
+        ,getQuizByUser,getDataQuiz,postSubmitQuiz};
