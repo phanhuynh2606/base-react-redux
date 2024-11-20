@@ -46,7 +46,16 @@ const postSubmitQuiz = async (payload) => {
   console.log({...payload});
   return await axios.post(`api/v1/quiz-submit`,{...payload});
 }
+const postCreateQuiz = async (name,description,difficulty,image) =>{
+  const data = new FormData();
+    data.append("name", name);
+    data.append("description", description);
+    data.append("difficulty", difficulty);
+    data.append("quizImage", image);
+    return await axios.post("api/v1/quiz", data);
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
-        ,getQuizByUser,getDataQuiz,postSubmitQuiz};
+        ,getQuizByUser,getDataQuiz,postSubmitQuiz
+        ,postCreateQuiz};

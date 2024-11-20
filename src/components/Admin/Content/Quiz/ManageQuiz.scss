@@ -12,6 +12,13 @@
     color: #535353;
   }
   .more-actions{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    .upload-image{
+      border-right:1px solid #ccc ;
+      padding-right: 10px;
+    }
     .label-upload{
       cursor: pointer;
       display: flex;
@@ -22,5 +29,29 @@
         transition: 0.5s all;
       }
     }
+    .img-preview{
+      border: 1px dashed #ccc;
+      height: 100px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      color: #ccc;
+      width: fit-content;
+      img{
+        max-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
   }
+  .action-add{
+    flex: 1;
+    justify-content: flex-end;
+    text-align: center;
+    button{
+      padding: 10px 30px;
+    }
+  }
+}
 }
