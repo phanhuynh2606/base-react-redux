@@ -26,4 +26,11 @@
         color:#dee2ec;;
       }
     }
+    
+  }
+  .pro-sidebar-header{
+    .logo:hover .react-icon {
+      transform: rotate(360deg);
+      transition: transform 1s ease-in-out;
+    }
   }

@@ -1,0 +1,26 @@
+.quiz-container{
+  padding: 15px;
+  .title{
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  legend{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    color: #535353;
+  }
+  .more-actions{
+    .label-upload{
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      &:hover .icon-upload{
+        transform: scale(1.2);
+        transition: 0.5s all;
+      }
+    }
+  }
+}

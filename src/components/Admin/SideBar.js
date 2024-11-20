@@ -13,9 +13,10 @@ import "react-pro-sidebar/dist/scss/styles.scss";
 import sidebarBg from '../../assets/bg2.jpg';
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 const SideBar = (props) => {
   const { collapsed, toggled, handleToggleSidebar } = props;
+  const navigate =useNavigate();
   return (
     <>
        <ProSidebar
@@ -36,8 +37,11 @@ const SideBar = (props) => {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            cursor: 'pointer',
           }}
-        > <DiReact size={'3em'} color={'#00bfff'}/>
+          className='logo'
+          onClick={() => navigate("/")}
+        > <DiReact size={'3em'} color={'#00bfff'} className='react-icon'/>
           <span>Huynh Phan</span>
         </div>
       </SidebarHeader>
@@ -58,7 +62,9 @@ const SideBar = (props) => {
           >
             <MenuItem>
             <NavLink to="manage-users"> Quản lý Users </NavLink> </MenuItem>
-            <MenuItem> Quản lý bài Quiz</MenuItem>
+            <MenuItem> Quản lý bài Quiz
+            <Link to="manage-quizzes" />
+            </MenuItem>
             <MenuItem> Quản lý câu hỏi</MenuItem>
           </SubMenu>
         </Menu>
