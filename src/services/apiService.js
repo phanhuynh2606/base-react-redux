@@ -54,8 +54,12 @@ const postCreateQuiz = async (name,description,difficulty,image) =>{
     data.append("quizImage", image);
     return await axios.post("api/v1/quiz", data);
 }
+
+const getAllQuizForAdmin = async () => {
+  return await axios.get(`api/v1/quiz/all`);
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
-        ,postCreateQuiz};
+        ,postCreateQuiz,getAllQuizForAdmin};
