@@ -58,8 +58,21 @@ const postCreateQuiz = async (name,description,difficulty,image) =>{
 const getAllQuizForAdmin = async () => {
   return await axios.get(`api/v1/quiz/all`);
 }
+const deleteQuizByAdmin = async (quizId) => {
+  return await axios.delete(`api/v1/quiz/${quizId}`);
+}
+const  putUpdateQuiz = async (id,name,description,type,image) => {
+  const data = new FormData();
+    data.append("id", id);
+    data.append("name", name);
+    data.append("description", description);
+    data.append("difficulty", type);
+    data.append("quizImage", image);
+    return  await axios.put("api/v1/quiz", data);
+}
+
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
-        ,postCreateQuiz,getAllQuizForAdmin};
+        ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz};

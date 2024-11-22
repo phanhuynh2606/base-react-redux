@@ -1,9 +1,9 @@
 import { FaPlusCircle } from "react-icons/fa";
 import "./ManageQuiz.scss";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { set } from "nprogress";
-import { postCreateQuiz } from "../../../../services/apiService";
+import { getAllQuizForAdmin, postCreateQuiz } from "../../../../services/apiService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";
 import Accordion from 'react-bootstrap/Accordion';
@@ -19,6 +19,17 @@ const ManageQuiz = (props) => {
   const [type, setType] = useState("EASY");
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [listQuiz, setListQuiz] = useState([]);
+  
+  useEffect(() =>{
+    getListQuiz()
+  },[])
+  const getListQuiz = async () => {
+    const res = await getAllQuizForAdmin();
+    if(res && res.EC === 0){
+      setListQuiz(res.DT);
+    }
+  }
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -27,7 +38,7 @@ const ManageQuiz = (props) => {
       // setPreviewImage("");
     }
   };
-
+  
   const handleSubmitQuiz = async () => {
     if (!name) {
       toast.error("Name is required!");
@@ -39,7 +50,7 @@ const ManageQuiz = (props) => {
     }
     const res = await postCreateQuiz(name, description, type, image);
     if(res && res.EC === 0){
-      console.log(res);
+      setListQuiz([res.DT,...listQuiz,]);
       toast.success(res.EM);
       setName("");
       setDescription("");
@@ -121,8 +132,11 @@ const ManageQuiz = (props) => {
       </Accordion.Item>
     </Accordion>
       <div className="list-detail mt-3 p-2">
-        <TableQuiz/>
+        <TableQuiz listQuiz={listQuiz} setListQuiz={setListQuiz}
+        getListQuiz={getListQuiz}
+        />
       </div>
+    
     </div>
   );
 };
