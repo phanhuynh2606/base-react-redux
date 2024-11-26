@@ -5,6 +5,8 @@
     margin-bottom: 15px;
     font-size: 20px;
     font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom:1px solid #ccc ;
   }
   .question-content{
     display: flex;
@@ -15,13 +17,21 @@
     .group-uploaded{
       display: flex;
       align-items: center;
+      text-align: center;
+      justify-content: center;
       .label-upload{
-        height: 30px;
-        border: 1px solid red;
-        border-radius: 5px;
-        padding: 0px 10px;
+        display: flex;
+        align-items: center;
         margin-right: 5px;
-        cursor: pointer
+        cursor: pointer;
+        color: #9068ffe3;
+        font-size: 25px;
+        &:hover{
+          color: #6a4cff;
+        }
+      }
+      span{
+        font-size: 15px;
       }
     }
     .btn-add{
@@ -29,14 +39,20 @@
       align-items: center;
       gap: 12px;
       .icon-add{
-        font-size: 22px;
-        color: green;
+        font-size: 24px;
+        color: #0988ffc8;
         cursor: pointer;
+        &:hover{
+          color: #0066ff;
+        }
       }
       .icon-remove{
-        font-size: 22px;
-        color: red;
+        font-size: 24px;
+        color: #e8781ca6;
         cursor: pointer;
+        &:hover{
+          color: #ff6a00;
+        }
       }
     }
   }
@@ -60,15 +76,21 @@
     }
     .btn-group{
       .icon-add{
-        font-size: 22px;
-        color: green;
+        font-size: 25px;
+        color: #0988ffe8;
         cursor: pointer;
         margin-right: 8px;
+        &:hover{
+          color: #0066ff;
+        }
       }
       .icon-remove{
-        font-size: 22px;
-        color: red;
+        font-size: 25px;
+        color: #e8781cec;
         cursor: pointer;
+        &:hover{
+          color: #ff6a00;
+        }
       }
     }
   }
