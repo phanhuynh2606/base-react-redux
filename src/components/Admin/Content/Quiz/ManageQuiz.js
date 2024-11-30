@@ -2,7 +2,6 @@ import { FaPlusCircle } from "react-icons/fa";
 import "./ManageQuiz.scss";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import { set } from "nprogress";
 import { getAllQuizForAdmin, postCreateQuiz } from "../../../../services/apiService";
 import { toast } from "react-toastify";
 import TableQuiz from "./TableQuiz";

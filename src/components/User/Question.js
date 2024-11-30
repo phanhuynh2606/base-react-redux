@@ -15,6 +15,7 @@ const Question = (props) => {
     {data.image ? 
     <div className="q-image">
         <img
+          alt="question"
           src={`data:image/jpeg;base64,${data.image}`}
           className="card-img-top"
         />
