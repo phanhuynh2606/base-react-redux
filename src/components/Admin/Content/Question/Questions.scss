@@ -12,7 +12,15 @@
   .question-content {
     display: flex;
     gap    : 25px;
-
+    label{
+      color: #2a2929ad;
+      
+    }
+    .form-control{
+      &:focus ~ label{
+        opacity: 0.6;
+      }
+    }
     .description {
       width: 50%;
     }
@@ -81,7 +89,10 @@
     align-items: center;
     display    : flex;
     gap        : 10px;
-
+    label{
+      color: #2a2929ad;
+      
+    }
     .input-answer {
       display     : flex;
       gap         : 10px;
@@ -121,7 +132,8 @@
       }
     }
   }
-
+  
+  
 }
 .react-viewer {
   .react-viewer-mask{
