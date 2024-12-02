@@ -70,9 +70,22 @@ const  putUpdateQuiz = async (id,name,description,type,image) => {
     data.append("quizImage", image);
     return  await axios.put("api/v1/quiz", data);
 }
+const postCreateQuestionForQuiz = async (quizId,description,questionImage) =>{
+    const data = new FormData();
+    data.append("quiz_id", quizId);
+    data.append("description", description);
+    data.append("questionImage", questionImage);
+    return await axios.post("api/v1/question", data);
+}
+const postCreateAnswerForQuestion = async (question_id,description,correct_answer) =>{
 
+  return await axios.post("api/v1/answer", {
+    description,correct_answer,question_id
+  });
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
-        ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz};
+        ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
+        ,postCreateQuestionForQuiz,postCreateAnswerForQuestion};

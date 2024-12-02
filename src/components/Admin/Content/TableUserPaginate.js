@@ -80,7 +80,7 @@ const TableUserPaginate = (props) => {
             })
           ) : (
             <tr>
-              <td colSpan="4" className="text-center fs-4 fw-light">
+              <td colSpan="5" className="text-center fs-4 fw-light">
                 Not found data 😢
               </td>
             </tr>

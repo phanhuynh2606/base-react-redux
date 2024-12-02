@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
 import Viewer from "react-viewer";
@@ -7,14 +7,10 @@ import { BsPatchPlus, BsPatchMinus } from "react-icons/bs";
 import { AiFillPlusSquare, AiFillMinusCircle } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
 import _ from "lodash";
+import { getAllQuizForAdmin, postCreateAnswerForQuestion, postCreateQuestionForQuiz } from "../../../../services/apiService";
 
 const Questions = (props) => {
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-  const [selectedQuiz, setSelectedQuiz] = useState({});
+
   const [questions, setQuestions] = useState([
     {
       id: uuidv4(),
@@ -33,6 +29,26 @@ const Questions = (props) => {
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImages, setDataImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [listQuiz, setListQuiz] = useState([]);
+  const [selectedQuiz, setSelectedQuiz] = useState({});
+
+  useEffect(() =>{
+    getListQuiz()
+  },[])
+  const getListQuiz = async () => {
+    const res = await getAllQuizForAdmin();
+    if(res && res.EC === 0){
+      let newQuiz = res.DT.map((quiz) =>{
+        return {
+          value: quiz.id,
+          label: `${quiz.id} - ${quiz.name}`
+        }
+      })
+      setListQuiz(newQuiz);
+      console.log(listQuiz);
+    }
+  }
+
   const handleAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
       setQuestions([
@@ -135,8 +151,16 @@ const Questions = (props) => {
       setQuestions(questionClone);
     }
   };
-  const handleSubmitQuestionsForQuiz = () => {
-    console.log(questions);
+  const handleSubmitQuestionsForQuiz = async () => {
+    //submit questions
+    await Promise.all(questions.map( async (question) =>{
+       const q = await postCreateQuestionForQuiz(+selectedQuiz.value,question.description,question.imageFile);
+       //Submit answers
+       await Promise.all(question.answers.map(async (answer) =>{
+          await postCreateAnswerForQuestion(q.DT.id,answer.description,answer.isCorrect);
+       }))
+    }))
+    
   };
   return (
     <>
@@ -148,7 +172,7 @@ const Questions = (props) => {
             <Select
               value={selectedQuiz}
               onChange={setSelectedQuiz}
-              options={options}
+              options={listQuiz}
               SSS
             />
           </div>

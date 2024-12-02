@@ -68,6 +68,11 @@ const TableQuiz = (props) => {
                 </td>
               </tr>
             ))}
+            {listQuiz && listQuiz.length === 0 && (
+              <tr>
+                <td colSpan="5" className="text-center">No data!</td>
+              </tr>
+            )}
         </tbody>
       </table>
       <ModalQuizUpdate show={showModalUpdate} 
