@@ -89,10 +89,13 @@ const postAssignQuiz = async (quizId,userId) => {
 const getQuizWithQA = async (quizId) => {
   return await axios.get(`api/v1/quiz-with-qa/${quizId}`);
 }
+const postUpsertQA = async (data) =>{
+  return await axios.post(`api/v1/quiz-upsert-qa`,{...data});
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
         ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
         ,postCreateQuestionForQuiz,postCreateAnswerForQuestion,postAssignQuiz
-        ,getQuizWithQA};
+        ,getQuizWithQA,postUpsertQA};

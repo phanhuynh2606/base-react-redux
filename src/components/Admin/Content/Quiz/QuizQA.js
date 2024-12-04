@@ -10,8 +10,7 @@ import _ from "lodash";
 import {
   getAllQuizForAdmin,
   getQuizWithQA,
-  postCreateAnswerForQuestion,
-  postCreateQuestionForQuiz,
+  postUpsertQA,
 } from "../../../../services/apiService";
 import { toast } from "react-toastify";
 const QuizQA = (props) => {
@@ -44,6 +43,12 @@ const QuizQA = (props) => {
       .then((res) => res.arrayBuffer())
       .then((buf) => new File([buf], filename, { type: mimeType }));
   }
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+});
 
   useEffect(() => {
     getListQuiz();
@@ -231,6 +236,10 @@ const QuizQA = (props) => {
     //validate answers
     const updatedQuestions = _.cloneDeep(questions);
     for (let i = 0; i < updatedQuestions.length; i++) {
+      if(updatedQuestions[i].imageFile){
+        const base64 = await toBase64(updatedQuestions[i].imageFile);
+        updatedQuestions[i].imageFile = base64;
+      }
       if (updatedQuestions[i].description === "") {
         updatedQuestions[i].isValidated = true;
         setQuestions(updatedQuestions);
@@ -260,50 +269,14 @@ const QuizQA = (props) => {
         return;
       }
     }
-    let successCount = 0;
-    let failCount = 0;
-    let count = questions.reduce(
-      (acc, question) => acc + question.answers.length,
-      0
-    );
-    console.log(count);
-    for (const question of questions) {
-      try {
-        const q = await postCreateQuestionForQuiz(
-          +selectedQuiz.value,
-          question.description,
-          question.imageFile
-        );
-        console.log(q);
-        if (q.EC !== 0) {
-          toast.error("Create question failed");
-          throw new Error("Create question failed");
-        }
-        for (const answer of question.answers) {
-          try {
-            const response = await postCreateAnswerForQuestion(
-              q.DT.id,
-              answer.description,
-              answer.isCorrect
-            );
-            if (!response) {
-              throw new Error("Create answer failed");
-            }
-            successCount++;
-          } catch (error) {
-            failCount++;
-          }
-        }
-      } catch (error) {
-        failCount++;
-      }
+    let res = await postUpsertQA({quizId: selectedQuiz.value, questions: updatedQuestions});
+    if(res && res.EC === 0){
+      toast.success(res.EM);
+      fetchQuizWithQA();
+    }else{
+      toast.error(res.EM);
     }
-    if (successCount === count) {
-      toast.success(`Create ${questions.length} question successfully`);
-      setQuestions(initQuestion);
-    } else {
-      toast.error(`Create questions failed: ${failCount} questions failed`);
-    }
+  
   };
 
   return (
