@@ -109,7 +109,7 @@ const Questions = (props) => {
     if (type === "QUESTION") {
       let newQuestions = questionClone.map((q) => {
         if (q.id === id) {
-          q.description = value.trim();
+          q.description = value;
         }
         return q;
       });
@@ -132,6 +132,7 @@ const Questions = (props) => {
     });
     setQuestions(newQuestions);
   };
+  console.log(dataImages);
   const handleAnswerQuestion = (type, answerId, questionId, value) => {
     let questionClone = _.cloneDeep(questions);
     const questionSelected = questionClone.find(
@@ -144,7 +145,7 @@ const Questions = (props) => {
             answer.isCorrect = value;
           }
           if (type === "INPUT") {
-            answer.description = value.trim();
+            answer.description = value;
           }
         }
         return answer;
@@ -168,7 +169,7 @@ const Questions = (props) => {
     //validate answers
     const updatedQuestions = _.cloneDeep(questions);
     for(let i = 0; i < updatedQuestions.length; i++){
-      if(updatedQuestions[i].description === ""){
+      if(updatedQuestions[i].description.trim() === ""){
         updatedQuestions[i].isValidated = true;
         setQuestions(updatedQuestions);
         toast.error(`Question ${i+1} is empty`);
@@ -179,7 +180,7 @@ const Questions = (props) => {
       }
       let countCorrect = 0;
       for(let j = 0; j < updatedQuestions[i].answers.length; j++){
-        if(updatedQuestions[i].answers[j].description === ""){
+        if(updatedQuestions[i].answers[j].description.trim() === ""){
           updatedQuestions[i].answers[j].isValidated = true;
           setQuestions(updatedQuestions);
           toast.error(`Answer ${j+1} of question ${i+1} is empty`);

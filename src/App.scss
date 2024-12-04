@@ -86,6 +86,14 @@ body {
       }
     }
   }
+  .app-content{
+    height: calc(100vh - 140px);
+    overflow-x: hidden;
+    .ps__rail-x{
+      display: none;
+      opacity: 0;
+    }
+  }
 }
 
 .homepage-container video{

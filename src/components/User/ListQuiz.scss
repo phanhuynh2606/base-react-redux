@@ -2,7 +2,26 @@
 .list-quiz-container{
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
   justify-content: space-between;
-
+  gap: 20px;
+  .card{
+    width: 30%!important;
+    img{
+      display: flex;
+      height: 65%;
+      width: 100%;
+      aspect-ratio: 16/11;
+      object-fit: cover;
+      object-position: center;
+    }
+    .card-body{
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      p{
+        min-height: 50%;
+      }
+    }
+  }
 }

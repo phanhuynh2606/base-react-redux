@@ -83,9 +83,16 @@ const postCreateAnswerForQuestion = async (question_id,description,correct_answe
     description,correct_answer,question_id
   });
 }
+const postAssignQuiz = async (quizId,userId) => {
+  return await axios.post(`api/v1/quiz-assign-to-user`,{quizId,userId});
+}
+const getQuizWithQA = async (quizId) => {
+  return await axios.get(`api/v1/quiz-with-qa/${quizId}`);
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
         ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
-        ,postCreateQuestionForQuiz,postCreateAnswerForQuestion};
+        ,postCreateQuestionForQuiz,postCreateAnswerForQuestion,postAssignQuiz
+        ,getQuizWithQA};

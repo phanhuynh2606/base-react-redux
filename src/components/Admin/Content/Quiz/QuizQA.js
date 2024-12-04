@@ -6,9 +6,14 @@ import "./QuizQA.scss";
 import { BsPatchPlus, BsPatchMinus } from "react-icons/bs";
 import { AiFillPlusSquare, AiFillMinusCircle } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
-import _, { set } from "lodash";
-import { getAllQuizForAdmin, postCreateAnswerForQuestion, postCreateQuestionForQuiz } from "../../../../services/apiService";
-import {toast} from 'react-toastify';
+import _ from "lodash";
+import {
+  getAllQuizForAdmin,
+  getQuizWithQA,
+  postCreateAnswerForQuestion,
+  postCreateQuestionForQuiz,
+} from "../../../../services/apiService";
+import { toast } from "react-toastify";
 const QuizQA = (props) => {
   const initQuestion = [
     {
@@ -26,29 +31,78 @@ const QuizQA = (props) => {
         },
       ],
     },
-  ]
+  ];
   const [questions, setQuestions] = useState(initQuestion);
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [dataImages, setDataImages] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [listQuiz, setListQuiz] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState({});
+  const [isHasImage, setIsHasImage] = useState({});
+  function urltoFile(url, filename, mimeType) {
+    return fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], filename, { type: mimeType }));
+  }
 
-  useEffect(() =>{
-    getListQuiz()
-  },[])
+  useEffect(() => {
+    getListQuiz();
+  }, []);
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizWithQA();
+    }
+  }, [selectedQuiz]);
+
+  const openPreviewImage = (index) => {
+    setIsPreviewImage(true);
+    setActiveIndex(isHasImage[index].index);
+  }
+  const fetchQuizWithQA = async () => {
+    setDataImages([]);
+    setIsHasImage([]);
+    const res = await getQuizWithQA(selectedQuiz.value);
+    let newQA = [];
+    let newImages = [];
+    let isValidImage = [];
+    let count = -1;
+    for(let i = 0; i < res.DT.qa.length; i++){
+      if(res.DT.qa[i].imageFile){
+        let q = res.DT.qa[i];
+        const file = await urltoFile(`data:image/png;base64,${q.imageFile}`,`Question-${i+1}.png`,"image/png");
+        q.imageFile = file;
+        q.imageName = file.name;
+        newImages.push({
+          src: `${URL.createObjectURL(file)}`,
+          alt: `${file.name}`,
+        })
+        count++;
+      }
+      isValidImage.push(
+        {
+          index: count,
+        }
+      );
+      setIsHasImage(isValidImage);
+      setDataImages(newImages);
+      newQA.push(res.DT.qa[i]);
+    }
+    setQuestions(newQA);
+  };
+
   const getListQuiz = async () => {
     const res = await getAllQuizForAdmin();
-    if(res && res.EC === 0){
-      let newQuiz = res.DT.map((quiz) =>{
+    if (res && res.EC === 0) {
+      let newQuiz = res.DT.map((quiz) => {
         return {
           value: quiz.id,
-          label: `${quiz.id} - ${quiz.name}`
-        }
-      })
+          label: `${quiz.id} - ${quiz.name}`,
+        };
+      });
       setListQuiz(newQuiz);
     }
-  }
+  };
+  
 
   const handleAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
@@ -116,16 +170,25 @@ const QuizQA = (props) => {
       setQuestions(newQuestions);
     }
   };
-  const handleOnChangeFileQuestion = (id, e,index) => {
+  const handleOnChangeFileQuestion = (id, e, index) => {
     let questionClone = _.cloneDeep(questions);
     let newQuestions = questionClone.map((q) => {
       if (q.id === id && e.target && e.target.files && e.target.files[0]) {
         q.imageFile = e.target.files[0];
         q.imageName = e.target.files[0].name;
-        if(dataImages.length > 0 && dataImages[index]){
-          dataImages[index] = { src: `${URL.createObjectURL(e.target.files[0])}`, alt: `${e.target.files[0].name}` };
-        }else{
-          setDataImages([...dataImages,{ src: `${URL.createObjectURL(e.target.files[0])}`, alt: `${e.target.files[0].name}` }]);
+        if (dataImages.length > 0 && dataImages[index]) {
+          dataImages[index] = {
+            src: `${URL.createObjectURL(e.target.files[0])}`,
+            alt: `${e.target.files[0].name}`,
+          };
+        } else {
+          setDataImages([
+            ...dataImages,
+            {
+              src: `${URL.createObjectURL(e.target.files[0])}`,
+              alt: `${e.target.files[0].name}`,
+            },
+          ]);
         }
       }
       return q;
@@ -161,79 +224,88 @@ const QuizQA = (props) => {
     //       await postCreateAnswerForQuestion(q.DT.id,answer.description,answer.isCorrect);
     //    }))
     // }))
-    if(_.isEmpty(selectedQuiz)){
+    if (_.isEmpty(selectedQuiz)) {
       toast.error("Please select a quiz to add questions");
       return;
     }
     //validate answers
     const updatedQuestions = _.cloneDeep(questions);
-    for(let i = 0; i < updatedQuestions.length; i++){
-      if(updatedQuestions[i].description === ""){
+    for (let i = 0; i < updatedQuestions.length; i++) {
+      if (updatedQuestions[i].description === "") {
         updatedQuestions[i].isValidated = true;
         setQuestions(updatedQuestions);
-        toast.error(`Question ${i+1} is empty`);
+        toast.error(`Question ${i + 1} is empty`);
         return;
-      }else{
+      } else {
         updatedQuestions[i].isValidated = false;
         setQuestions(updatedQuestions);
       }
       let countCorrect = 0;
-      for(let j = 0; j < updatedQuestions[i].answers.length; j++){
-        if(updatedQuestions[i].answers[j].description === ""){
+      for (let j = 0; j < updatedQuestions[i].answers.length; j++) {
+        if (updatedQuestions[i].answers[j].description === "") {
           updatedQuestions[i].answers[j].isValidated = true;
           setQuestions(updatedQuestions);
-          toast.error(`Answer ${j+1} of question ${i+1} is empty`);
+          toast.error(`Answer ${j + 1} of question ${i + 1} is empty`);
           return;
-        }else{
+        } else {
           updatedQuestions[i].answers[j].isValidated = false;
           setQuestions(updatedQuestions);
-          if(updatedQuestions[i].answers[j].isCorrect){
+          if (updatedQuestions[i].answers[j].isCorrect) {
             countCorrect++;
           }
         }
       }
-      if(countCorrect === 0){
-        toast.error(`Question ${i+1} has no correct answer`);
+      if (countCorrect === 0) {
+        toast.error(`Question ${i + 1} has no correct answer`);
         return;
       }
     }
     let successCount = 0;
     let failCount = 0;
-    let count = questions.reduce((acc,question) => acc + question.answers.length,0);
+    let count = questions.reduce(
+      (acc, question) => acc + question.answers.length,
+      0
+    );
     console.log(count);
-    for(const question of questions){
+    for (const question of questions) {
       try {
-        const q = await postCreateQuestionForQuiz(+selectedQuiz.value,question.description,question.imageFile);
+        const q = await postCreateQuestionForQuiz(
+          +selectedQuiz.value,
+          question.description,
+          question.imageFile
+        );
         console.log(q);
-        if(q.EC !== 0){
+        if (q.EC !== 0) {
           toast.error("Create question failed");
           throw new Error("Create question failed");
         }
-      for(const answer of question.answers){
-        try {
-          const response = await postCreateAnswerForQuestion(q.DT.id,answer.description,answer.isCorrect);
-          if(!response){
-            throw new Error("Create answer failed");
+        for (const answer of question.answers) {
+          try {
+            const response = await postCreateAnswerForQuestion(
+              q.DT.id,
+              answer.description,
+              answer.isCorrect
+            );
+            if (!response) {
+              throw new Error("Create answer failed");
+            }
+            successCount++;
+          } catch (error) {
+            failCount++;
           }
-          successCount++;
-        } catch (error) {
-          failCount++;
         }
-      }
       } catch (error) {
         failCount++;
       }
-      
     }
-    if(successCount === count){
+    if (successCount === count) {
       toast.success(`Create ${questions.length} question successfully`);
       setQuestions(initQuestion);
-    }else{
+    } else {
       toast.error(`Create questions failed: ${failCount} questions failed`);
     }
-
-    
   };
+
   return (
     <>
       <div className="question-container">
@@ -257,9 +329,10 @@ const QuizQA = (props) => {
                     <div className="form-floating description">
                       <input
                         type="text"
-                        className={`form-control ${question.isValidated ? "is-invalid" : ""}`}
+                        className={`form-control ${
+                          question.isValidated ? "is-invalid" : ""
+                        }`}
                         placeholder="Description"
-                        
                         onChange={(e) =>
                           handleOnChange(
                             "QUESTION",
@@ -283,14 +356,16 @@ const QuizQA = (props) => {
                         hidden
                         id={`uploadFileQuestion-${question.id}`}
                         onChange={(e) =>
-                          handleOnChangeFileQuestion(question.id, e,index)
+                          handleOnChangeFileQuestion(question.id, e, index)
                         }
                       />
                       {question.imageName ? (
-                        <span className="previewImage" onClick={() =>{
-                          setIsPreviewImage(true);
-                          setActiveIndex(index);
-                        }}>{question.imageName}</span>
+                        <span
+                          className="previewImage"
+                          onClick={() => openPreviewImage(index)}
+                        >
+                          {question.imageName}
+                        </span>
                       ) : (
                         <span>0 file is uploaded</span>
                       )}
@@ -340,7 +415,9 @@ const QuizQA = (props) => {
                               <input
                                 value={answer.description}
                                 type="text"
-                                className={`form-control ${answer.isValidated ? "is-invalid" : ""}`}
+                                className={`form-control ${
+                                  answer.isValidated ? "is-invalid" : ""
+                                }`}
                                 placeholder="Answer"
                                 onChange={(e) =>
                                   handleAnswerQuestion(
@@ -395,18 +472,20 @@ const QuizQA = (props) => {
             </div>
           )}
           {isPreviewImage && (
-                    <Viewer
-                    visible={isPreviewImage}
-                    onClose={() => {setIsPreviewImage(false);}}
-                    images={[...dataImages]}
-                    zIndex={9999}
-                    activeIndex={activeIndex}
-                    className="viewer-image"
-                  />
-                  )}
+            <Viewer
+              visible={isPreviewImage}
+              onClose={() => {
+                setIsPreviewImage(false);
+              }}
+              images={[...dataImages]}
+              zIndex={9999}
+              activeIndex={activeIndex}
+              className="viewer-image"
+            />
+          )}
         </div>
       </div>
     </>
   );
 };
-export default QuizQA
+export default QuizQA;
