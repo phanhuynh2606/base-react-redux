@@ -1,6 +1,8 @@
 import _ from "lodash";
-
+import { useState } from "react";
+import Viewer from "react-viewer";
 const Question = (props) => {
+  const [isPreviewImage, setIsPreviewImage] = useState(false);
   const { data, index,handleCheckBox } = props;
   if (_.isEmpty(data)) {
     return <div>Loading...</div>;
@@ -18,7 +20,17 @@ const Question = (props) => {
           alt="question"
           src={`data:image/jpeg;base64,${data.image}`}
           className="card-img-top"
+          onClick={() => setIsPreviewImage(true)}
         />
+          {isPreviewImage && (
+                    <Viewer
+                    visible={isPreviewImage}
+                    onClose={() => {setIsPreviewImage(false);}}
+                    images={[{ src: `data:image/jpeg;base64,${data.image}`,alt:`Question Image` }] }
+                    zIndex={9999}
+                    noNavbar={true}
+                  />
+                  )}
       </div> : <div className="q-image">
       </div>}
       

@@ -9,7 +9,6 @@ const ModalResult = (props) => {
     setShow(false);
   };
 
-  console.log(result);
   return (
     <>
       <Modal

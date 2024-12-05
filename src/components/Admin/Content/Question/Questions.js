@@ -6,7 +6,7 @@ import "./Questions.scss";
 import { BsPatchPlus, BsPatchMinus } from "react-icons/bs";
 import { AiFillPlusSquare, AiFillMinusCircle } from "react-icons/ai";
 import { RiImageAddFill } from "react-icons/ri";
-import _, { set } from "lodash";
+import _ from "lodash";
 import { getAllQuizForAdmin, postCreateAnswerForQuestion, postCreateQuestionForQuiz } from "../../../../services/apiService";
 import {toast} from 'react-toastify';
 const Questions = (props) => {
