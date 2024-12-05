@@ -70,7 +70,13 @@
       text-align: center;
       padding-top: 5px;
       font-size: 25px;
-      font-weight: 400;
+      font-weight: 500;
+      .clock-fade{
+        border: 1px solid #65646468;
+        padding: 2px 20px;
+        filter: drop-shadow(0 0 10px #dd6262c2);
+        border-radius: 5px;
+      }
     }
     .main-question{
       display: flex;

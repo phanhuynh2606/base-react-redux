@@ -43,7 +43,6 @@ const getDataQuiz = async (quizId) => {
   return await axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
 }
 const postSubmitQuiz = async (payload) => {
-  console.log({...payload});
   return await axios.post(`api/v1/quiz-submit`,{...payload});
 }
 const postCreateQuiz = async (name,description,difficulty,image) =>{

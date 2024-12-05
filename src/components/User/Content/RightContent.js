@@ -2,7 +2,7 @@ import { useRef } from "react";
 import CountDown from "./CountDown";
 
 const RightContent = (props) => {
-  const { dataQuiz,setIndex } = props;
+  const { dataQuiz,setIndex,quizId,isFinish } = props;
   const refDiv = useRef([]);
   const onTimeUp = () => {
     props.handleFinishQuiz();
@@ -11,7 +11,11 @@ const RightContent = (props) => {
     if(question && question.answers.length > 0){
       const isSelected = question.answers.some((answer) => answer.isSelected);
       if(isSelected){
+        if(refDiv.current[index]){
         refDiv.current[index].classList.add("selected");
+        }else{
+          return "question selected";
+        }
       }else{
         if(refDiv.current[index] && refDiv.current[index].classList.contains("selected")){
           refDiv.current[index].className = "question clicked";
@@ -36,7 +40,7 @@ const RightContent = (props) => {
   return (
     <>
       <div key="main-timer" className="main-timer">
-        <CountDown onTimeUp={onTimeUp}/>
+        <CountDown onTimeUp={onTimeUp} quizId={quizId} isFinish={isFinish}/>
       </div>
       <div className="main-question">
         {dataQuiz &&

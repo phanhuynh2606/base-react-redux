@@ -16,9 +16,41 @@ const DetailQuiz = (props) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isShowResult, setIsShowResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
+  const [isFinish, setIsFinish] = useState(false);
   useEffect(() => {
-    fetchQuestion();
+    const storedQuizData = sessionStorage.getItem(`quizData_${quizId}`);
+    if (storedQuizData) {
+      setDataQuiz(JSON.parse(storedQuizData));
+    }else{
+      fetchQuestion();
+    }
   }, [quizId]);
+  useEffect(() => { 
+    handleVisibilityChange();
+  }, [dataQuiz]);
+  const handleVisibilityChange = () => {
+      if (document.hidden) {
+          if(dataQuiz && dataQuiz.length > 0){
+            handleFinishQuiz(); // Gọi hàm để nộp bài
+          }else{
+            const storedQuizData = sessionStorage.getItem(`quizData_${quizId}`);
+            setDataQuiz(JSON.parse(storedQuizData));
+          }
+      }
+  };
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = ""; // Cảnh báo người dùng trước khi rời khỏi trang
+    };
+
+    useEffect(() => {
+      window.addEventListener("beforeunload", handleBeforeUnload);
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+      return () => {
+        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+      };
+    }, []);
 
   const fetchQuestion = async () => {
     const res = await getDataQuiz(quizId);
@@ -44,6 +76,7 @@ const DetailQuiz = (props) => {
         })
         .value();
       setDataQuiz(data);
+      sessionStorage.setItem(`quizData_${quizId}`, JSON.stringify(data));
     }
   };
   const handlePrev = () => {
@@ -67,9 +100,11 @@ const DetailQuiz = (props) => {
       }
     }
     setDataQuiz(dataQuizClone);
-
+    sessionStorage.setItem(`quizData_${quizId}`, JSON.stringify(dataQuizClone));
   }
   const handleFinishQuiz = async () => {
+    localStorage.removeItem(`endTime_${quizId}`);
+    sessionStorage.removeItem(`quizData_${quizId}`);
     let payload = {};
     if(dataQuiz && dataQuiz.length > 0){
       payload = {
@@ -84,7 +119,9 @@ const DetailQuiz = (props) => {
     }
     // call API
     const res = await postSubmitQuiz(payload);
+    console.log(res);
     if(res && res.EC === 0){
+      setIsFinish(true);
       setDataModalResult(res.DT);
       setIsShowResult(true);
     }else{
@@ -132,9 +169,11 @@ const DetailQuiz = (props) => {
         </div>
         <div className="right-content">
           <RightContent 
+            quizId={quizId}
             dataQuiz={dataQuiz} 
             handleFinishQuiz={handleFinishQuiz}
             setIndex={setCurrentQuestion}
+            isFinish={isFinish}
           />
         </div>
       </div>
