@@ -91,10 +91,15 @@ const getQuizWithQA = async (quizId) => {
 const postUpsertQA = async (data) =>{
   return await axios.post(`api/v1/quiz-upsert-qa`,{...data});
 }
+const logout = async (email,refresh_token) => {
+  return await axios.post("api/v1/logout",{email,refresh_token});
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
         ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
         ,postCreateQuestionForQuiz,postCreateAnswerForQuestion,postAssignQuiz
-        ,getQuizWithQA,postUpsertQA};
+        ,getQuizWithQA,postUpsertQA
+        ,logout
+      };

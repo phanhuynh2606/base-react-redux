@@ -26,7 +26,8 @@ const Login = (props) => {
 
   const handleLogin = async () => {
     //validate
-    if (!validateEmail(email)) {
+    const isValidEmail = validateEmail(email);
+    if (!isValidEmail) {
       toast.error("Email is invalid");
       return;
     }
@@ -36,7 +37,7 @@ const Login = (props) => {
     }
     setLoading(true);
     // submit API
-    const res = await postLogin(email, password);
+    const res = await postLogin(email, password.trim());
     if (res && res.EC === 0) {
       dispatch(doLogin(res));
       toast.success(res.EM);
@@ -44,15 +45,15 @@ const Login = (props) => {
       navigate("/");
     }
     if (res && res.EC !== 0) {
-      setLoading(false);
       toast.error(res.EM);
+      setLoading(false);
     }
   };
-  document.addEventListener("keydown",(e) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = (e) => {
+    if (e && e.key === "Enter") {
       handleLogin();
     }
-  });
+  };
 
   return (
     <>
@@ -82,6 +83,7 @@ const Login = (props) => {
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e)}
             />
           </div>
           <div className="form-group">
