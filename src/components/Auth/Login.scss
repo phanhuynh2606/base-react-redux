@@ -22,6 +22,18 @@
     text-align: right;
     height: 45px;
     padding: 5px 40px 0 100px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    align-items: center;
+    .no-account-text{
+      margin-right: -20px;
+    }
+    .dropdown-menu{
+      &.show{
+        transform: translate3d(15px, 35px, 0px)!important;
+      }
+    }
     button{
       margin-left: 15px;
       border-radius: 5px;
