@@ -9,10 +9,34 @@
     .admin-content{
       width: 100%;
       .admin-header{
-        height: 40px;
+        height: 60px;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding-left: 5px;
+        display:flex;
+        justify-content: space-between;
+        padding-right: 20px;
+        align-items: center;
+        .toggle{
+          align-self: center;
+          cursor: pointer;
+          color: #605e5ec3;
+          font-size: 22px;
+          &:hover{
+            color: #131313;
+          }
+        }
+        .admin-header-right{
+          display: flex;
+          align-items: center;
+          margin-right: 25px;
+          gap: 10px;
+          justify-content: space-between;
+          .dropdown-toggle::after{
+            display: none!important;
+            
+          }
+        }
       }
       .admin-main{
         height: calc(100vh - 40px);

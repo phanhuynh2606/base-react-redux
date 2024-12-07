@@ -28,12 +28,40 @@ const ManageQuiz = (props) => {
   useEffect(() => {
     getListQuiz();
   }, []);
+  const translateText = async (text, targetLang) => {
+    const response = await fetch(
+      `https://lingva.ml/api/v1/${targetLang}/en/${encodeURIComponent(text)}`
+    );
+    const data = await response.json();
+    return data.translation;
+  };
+
   const getListQuiz = async () => {
     const res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
       setListQuiz(res.DT);
+      // const cacheKey = `translated_quizzes_en`;
+      // const cachedData = localStorage.getItem(cacheKey);
+
+      // if (cachedData) {
+      //   setListQuiz(JSON.parse(cachedData));
+      //   return;
+      // }
+      // console.log(await translateText("Xin Chào", "en"));
+      // const titles = res.DT.map((quiz) => quiz.description);
+      // const translatedTitles = await translateText(titles, "en");
+      // const arrTranslatedTitles = translatedTitles.split(",");
+      // console.log(arrTranslatedTitles);
+      // const translatedQuiz = res.DT.map((quiz, index) => ({
+      //   ...quiz,
+      //   description: arrTranslatedTitles[index],
+      // }));
+      // console.log(translatedQuiz);
+      // localStorage.setItem(cacheKey, JSON.stringify(translatedQuiz));
+      // setListQuiz(translatedQuiz);
     }
   };
+
   const handleUploadImage = (e) => {
     if (e.target && e.target.files && e.target.files[0]) {
       setPreviewImage(URL.createObjectURL(e.target.files[0]));
@@ -156,13 +184,13 @@ const ManageQuiz = (props) => {
         <Accordion.Item eventKey="1">
           <Accordion.Header>Update Q/A Quiz</Accordion.Header>
           <Accordion.Body>
-            <QuizQA/>
+            <QuizQA />
           </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
           <Accordion.Header>Assign to Users</Accordion.Header>
           <Accordion.Body>
-            <AssignQuiz/>
+            <AssignQuiz />
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>

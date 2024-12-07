@@ -10,7 +10,7 @@ const Language = () => {
   return (
     <>
       <NavDropdown
-        title={i18n.language === "en" ? <img src={en} alt="en" width="20" height="20" /> : <img src={vn} alt="en" width="20" height="20" />}
+        title={i18n.language === "en" ? <img src={en} alt="en" width="22" height="22" /> : <img src={vn} alt="en" width="22" height="22" />}
         id="basic-nav-dropdown2"
         className="languages">
         <NavDropdown.Item>

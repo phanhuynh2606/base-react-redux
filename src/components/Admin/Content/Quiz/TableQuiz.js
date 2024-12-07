@@ -12,6 +12,7 @@ const TableQuiz = (props) => {
     setQuizUpdate(quiz);
     setShowModalUpdate(true);
   };
+
   const handleDeleteQuiz = (id) => {
     Swal.fire({
       title: `Are you sure delete quiz id : ${id}`,
