@@ -12,9 +12,6 @@ import {
 import { getOverView } from "../../../services/apiService";
 import { useEffect, useState } from "react";
 const DashBoard = (props) => {
-    },
-    {
-      name: "Page C",
 
   const [dataOverview, setDataOverview] = useState([]);
   const [dataChart, setDataChart] = useState([]);
