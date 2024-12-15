@@ -15,11 +15,11 @@ const Language = () => {
         className="languages">
         <NavDropdown.Item>
           <img src={en} alt="vn" width="20" height="20" />
-          <span className="ms-2" onClick={() => handleChangeLanguage('en')}>English</span>
+          <span className="ms-2" onClick={() => handleChangeLanguage('en')}>{t("header.en")}</span>
         </NavDropdown.Item>
         <NavDropdown.Item className="d-flex">
           <img src={vn} alt="vn" width="20" height="20" />
-          <span className="ms-2" onClick={() => handleChangeLanguage('vi')}>Việt Nam</span>
+          <span className="ms-2" onClick={() => handleChangeLanguage('vi')}>{t("header.vi")}</span>
         </NavDropdown.Item>
       </NavDropdown>
     </>

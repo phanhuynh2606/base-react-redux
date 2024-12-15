@@ -1,10 +1,40 @@
 {
-    "homepage": {
-      "title1": "There's better way to ask",
-      "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead-and make everyone happy.",
-      "title3": {
-        "login": "Get's started. It's free",
-        "quiz": "Doing Quiz Now"
-      }
+  "homepage": {
+    "title1": "There's better way to ask",
+    "title2": "You don't want to make a boring form. And your audience won't answer one. Create a typeform instead-and make everyone happy.",
+    "title3": {
+      "login": "Get's started. It's free",
+      "quiz": "Doing Quiz Now"
+    }
+  },
+  "header": {
+    "home": "Home",
+    "u": "Users",
+    "a": "Admin",
+    "s": "Setting",
+    "l": "Logout",
+    "login": "Log in",
+    "signup": "Sign up",
+    "p": "Profile",
+    "en": "English",
+    "vi": "Vietnamese",
+    "quiz":"Exam"
+  },
+  "login": {
+    "title": "Hello, Who's this?",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot password?",
+    "login": "Login to Quiz",
+    "back": "Go to homepage",
+    "text": "Don't have an account?"
+  },
+  "signup": {
+    "title": "Welcome to Quiz",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "signup": "Create a free account"
   }
+
 }

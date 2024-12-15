@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { getDataQuiz, postSubmitQuiz } from "../../services/apiService";
 import _ from "lodash";
 import "./DetailQuiz.scss";
@@ -7,16 +7,20 @@ import Question from "./Question";
 import { toast } from "react-toastify";
 import ModalResult from "./ModalResult";
 import RightContent from "./Content/RightContent";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { useTranslation } from "react-i18next";
+
 const DetailQuiz = (props) => {
   const params = useParams();
   const quizId = params.id;
   const location = useLocation();
-
+  const {t} = useTranslation();
   const [dataQuiz, setDataQuiz] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [isShowResult, setIsShowResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
   const [isFinish, setIsFinish] = useState(false);
+
   useEffect(() => {
     const storedQuizData = sessionStorage.getItem(`quizData_${quizId}`);
     if (storedQuizData) {
@@ -133,6 +137,13 @@ const DetailQuiz = (props) => {
 
   return (
     <>
+     <Breadcrumb className="quiz-detail-breadcrumb">
+      <NavLink to='/' className="breadcrumb-item">{t('header.home')} </NavLink>
+      <NavLink to='/users' className="breadcrumb-item">
+        {t('header.u')}
+      </NavLink>
+      <Breadcrumb.Item active>{t('header.quiz')}</Breadcrumb.Item>
+    </Breadcrumb>
       <div className="detail-quiz-container">
         <div className="left-content">
           <div className="title">

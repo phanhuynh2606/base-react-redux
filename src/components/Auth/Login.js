@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { FaSpinner } from "react-icons/fa6";
 import Language from "../Header/Language";
+import { useTranslation } from "react-i18next";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const Login = (props) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const validateEmail = (email) => {
     return String(email)
       .toLowerCase()
@@ -60,15 +61,15 @@ const Login = (props) => {
     <>
       <div className="login-container">
         <div className="header">
-          <span className="no-account-text">Don't have an account?</span>
-          <button onClick={() => navigate("/signup")}>Sign up</button>
+          <span className="no-account-text">{t('login.text')}</span>
+          <button onClick={() => navigate("/signup")}>{t('header.signup')}</button>
           <Language/>
         </div>
         <div className="title col-4 mx-auto">Quiz</div>
-        <div className="welcome col-4 mx-auto">Hello, Who's this?</div>
+        <div className="welcome col-4 mx-auto">{t('login.title')}</div>
         <div className="content-form col-4 mx-auto">
           <div className="form-group">
-            <label>Email</label>
+            <label>{t('login.email')}</label>
             <input
               type="text"
               name="email"
@@ -78,7 +79,7 @@ const Login = (props) => {
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label>{t('login.password')}</label>
             <input
               type="password"
               name="password"
@@ -89,7 +90,7 @@ const Login = (props) => {
             />
           </div>
           <div className="form-group">
-            <span className="forgot-password">Forgot Password?</span>
+            <span className="forgot-password">{t('login.forgot')}</span>
           </div>
           <div className="form-group">
             <button
@@ -99,14 +100,14 @@ const Login = (props) => {
             >
               <div className="action">
                 {loading &&<FaSpinner className="loader-icon" size={18}/>}
-                <span>Login to Quiz</span>
+                <span>{t('login.login')}</span>
               </div>
             </button>
           </div>
           <div className="back">
             <span onClick={() => navigate("/")}>
               <IoMdArrowBack />
-              Go to Homepage
+              {t('login.back')}
             </span>
           </div>
         </div>

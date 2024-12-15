@@ -58,6 +58,21 @@ body {
         left: -15px;
     }
     }
+    .navbar-brand{
+      .brand-icon{
+        font-size: 10px;
+        animation: spin 5s linear infinite;
+      }
+    }
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+      
+    }
     .languages{
       // margin-left: 10px;
       .dropdown-toggle::after{

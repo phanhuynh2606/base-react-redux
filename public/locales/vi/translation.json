@@ -6,5 +6,35 @@
         "login": "Bắt đầu miễn phí",
         "quiz": "Kiểm tra ngay"
       }
+    },
+    "header": {
+      "home": "Trang chủ",
+      "u": "Người dùng",
+      "a": "Quản trị",
+      "s": "Cài đặt",
+      "l": "Đăng xuất",
+      "p": "Hồ sơ",
+      "login": "Đăng nhập",
+      "signup": "Đăng ký",
+      "en": "Tiếng Anh",
+      "vi": "Tiếng Việt",
+      "text":"Chưa có tài khoản?",
+      "quiz":"Kiểm tra"
+    },
+    "login": {
+      "title": "Xin chào, Bạn là ai?",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "forgot": "Quên mật khẩu?",
+      "login": "Đăng nhập vào Quiz",
+      "back" : "Quay lại trang chủ",
+      "text": "Chưa có tài khoản?"
+    },
+    "signup": {
+      "title": "Chào mừng bạn đến với Quiz",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "username":"Tên người dùng",
+      "signup": "Tạo tài khoản miễn phí"
     }
 }
