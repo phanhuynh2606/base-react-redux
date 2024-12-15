@@ -94,6 +94,9 @@ const postUpsertQA = async (data) =>{
 const logout = async (email,refresh_token) => {
   return await axios.post("api/v1/logout",{email,refresh_token});
 }
+const getOverView = async () => {
+  return await axios.get(`api/v1/overview`);
+}
 export {postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
@@ -101,5 +104,5 @@ export {postCreateUser, getAllUsers
         ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
         ,postCreateQuestionForQuiz,postCreateAnswerForQuestion,postAssignQuiz
         ,getQuizWithQA,postUpsertQA
-        ,logout
+        ,logout,getOverView
       };

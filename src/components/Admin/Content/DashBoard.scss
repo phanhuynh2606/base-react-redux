@@ -8,22 +8,37 @@
   }
   .content{
     display: flex;
+    gap: 15px;
     .c-left{
       width: 40%;
-      border: 1px solid #ccc;
       display: flex;
       flex-wrap: wrap;
+      gap: 15px;
       .child{
-        width: 50%;
+        width: calc(50% - 7.5px);
         border: 1px solid #ccc;
         height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+        .text-1{
+          font-size: 20px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .text-2{
+          font-size: 26px;
+          font-weight: 500;
+          font-family: cursive;
+        }
       }
     }
     .c-right{
       padding: 10px 5px 5px 0;
       width: 60%;
       border: 1px solid #ccc;
-      height: 300px;
+      border-radius: 10px;
       flex: 1;
       display: flex;
       justify-content: center;
