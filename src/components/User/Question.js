@@ -1,9 +1,10 @@
 import _ from "lodash";
 import { useState } from "react";
 import Viewer from "react-viewer";
+import { IoIosClose, IoIosCheckmark } from "react-icons/io";
 const Question = (props) => {
   const [isPreviewImage, setIsPreviewImage] = useState(false);
-  const { data, index,handleCheckBox } = props;
+  const { data, index,handleCheckBox,isShowAnswer } = props;
   if (_.isEmpty(data)) {
     return <div>Loading...</div>;
   }
@@ -48,11 +49,20 @@ const Question = (props) => {
                   type="checkbox"
                   id={`a-${index}`}
                   checked={answer.isSelected}
+                  disabled={isShowAnswer}
                   onChange={(e) =>handleOnchangeCheckBox(e,answer.id,data.questionId)}
                 />
                 <label className="form-check-label ms-1" htmlFor={`a-${index}`}>
                   {answer.description}
                 </label>
+                {isShowAnswer=== true && 
+                  <>  
+                      {answer.isSelected === true && !answer.isCorrect 
+                      && <IoIosClose size={31}  className='incorrect' />}
+                      {answer.isCorrect === true 
+                      && <IoIosCheckmark className='correct' size={31} />}
+                  </>
+                }
               </div>
             );
           })}

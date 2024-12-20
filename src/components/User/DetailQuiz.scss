@@ -43,6 +43,16 @@
           text-align: left;
           padding-left: 50px;
           user-select: none;
+          display: flex;
+          align-items: center;
+          .incorrect{
+            color: #f73333c2;
+            margin-top: -3px;
+          }
+          .correct{
+            color: #2e8b57;
+            margin-top: -3px;
+          }
           label{
             user-select: none;
             font-size: 1.12rem;

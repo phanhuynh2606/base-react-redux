@@ -9,6 +9,7 @@ import ModalResult from "./ModalResult";
 import RightContent from "./Content/RightContent";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useTranslation } from "react-i18next";
+import { set } from "nprogress";
 
 const DetailQuiz = (props) => {
   const params = useParams();
@@ -20,6 +21,8 @@ const DetailQuiz = (props) => {
   const [isShowResult, setIsShowResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
   const [isFinish, setIsFinish] = useState(false);
+  const [isSubmitQuiz, setIsSubmitQuiz] = useState(false);
+  const [isShowAnswer, setIsShowAnswer] = useState(false);
 
   useEffect(() => {
     const storedQuizData = sessionStorage.getItem(`quizData_${quizId}`);
@@ -82,7 +85,9 @@ const DetailQuiz = (props) => {
         })
         .value();
       setDataQuiz(data);
-      sessionStorage.setItem(`quizData_${quizId}`, JSON.stringify(data));
+      if(!isSubmitQuiz){
+        sessionStorage.setItem(`quizData_${quizId}`, JSON.stringify(data));
+      }
     }
   };
   const handlePrev = () => {
@@ -125,14 +130,43 @@ const DetailQuiz = (props) => {
     }
     // call API
     const res = await postSubmitQuiz(payload);
-    console.log(res);
     if(res && res.EC === 0){
       setIsFinish(true);
+      setIsSubmitQuiz(true);
       setDataModalResult(res.DT);
       setIsShowResult(true);
+      // update DataQuiz with result
+      if( res.DT && res.DT.quizData){
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        const dataResult = res.DT.quizData;
+        console.log(dataResult);
+        console.log(dataQuizClone);
+        dataResult.forEach((item) => {
+          for(let i = 0 ; i < dataQuizClone.length; i++){
+            if(+item.questionId === +dataQuizClone[i].questionId){
+              //update answers
+              let newAnswers = [];
+              for(let j = 0; j < dataQuizClone[i].answers.length;j++){
+                let answer = item.systemAnswers.find((systemAnswer) => +systemAnswer.id === +dataQuizClone[i].answers[j].id);
+                if(answer){
+                  dataQuizClone[i].answers[j].isCorrect = true;
+                }
+                newAnswers.push(dataQuizClone[i].answers[j]);
+              }
+              dataQuizClone[i].answers = newAnswers;
+            }
+          }
+
+        });
+        setDataQuiz(dataQuizClone);
+      }
     }else{
       toast.error(res.EM);
     }
+  }
+  const handleShowAnswer = () => {
+    if(!isSubmitQuiz) return;
+    setIsShowAnswer(true);
   }
 
   return (
@@ -154,6 +188,8 @@ const DetailQuiz = (props) => {
             <Question
               index={currentQuestion}
               handleCheckBox={handleCheckBox}
+              isShowAnswer={isShowAnswer}
+              isSubmitQuiz={isSubmitQuiz}
               data={
                 dataQuiz && dataQuiz.length > 0 ? dataQuiz[currentQuestion] : []
               }
@@ -190,7 +226,11 @@ const DetailQuiz = (props) => {
           />
         </div>
       </div>
-      <ModalResult show={isShowResult} setShow={setIsShowResult} result={dataModalResult}/>
+      <ModalResult show={isShowResult} 
+        setShow={setIsShowResult} 
+        result={dataModalResult}
+        handleShowAnswer={handleShowAnswer}
+      />
     </>
   );
 };

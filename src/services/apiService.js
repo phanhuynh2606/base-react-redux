@@ -97,12 +97,25 @@ const logout = async (email,refresh_token) => {
 const getOverView = async () => {
   return await axios.get(`api/v1/overview`);
 }
-export {postCreateUser, getAllUsers
+const updateProfile = async (username,image) => {
+  const data = new FormData();
+  data.append("username", username);
+  data.append("userImage", image);
+  return await axios.post("api/v1/profile", data);
+}
+const postChangePassword = async (current_password,new_password) => {
+  return await axios.post("api/v1/change-password",{current_password,new_password});
+}
+const getHistoryExam = async () => {
+  return await axios.get(`api/v1/history`);
+}
+export { postCreateUser, getAllUsers
         ,putUpdateUser,deleteUser
         ,getUsersWithPaginate,postLogin,postRegister
         ,getQuizByUser,getDataQuiz,postSubmitQuiz
         ,postCreateQuiz,getAllQuizForAdmin,deleteQuizByAdmin,putUpdateQuiz
         ,postCreateQuestionForQuiz,postCreateAnswerForQuestion,postAssignQuiz
         ,getQuizWithQA,postUpsertQA
-        ,logout,getOverView
+        ,logout,getOverView,updateProfile
+        ,postChangePassword,getHistoryExam
       };

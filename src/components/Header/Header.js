@@ -11,13 +11,19 @@ import { toast } from "react-toastify";
 import { doLogout } from "../../redux/action/userAction";
 import Language from "./Language";
 import { useTranslation } from "react-i18next";
+import Profile from "./Profile";
+import { useState } from "react";
 
 const Header = () => {
   const account = useSelector((state) => state.user.account);
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const [showModalProfile, setShowModalProfile] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {t} = useTranslation();
+
+  const handleShow = () => setShowModalProfile(true);
+
   const handleLogin = () => {
     navigate("/login");
   };
@@ -35,6 +41,7 @@ const Header = () => {
     }
   };
   return (
+    <>
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <NavLink to="/" className="navbar-brand d-flex align-items-center">
@@ -80,7 +87,7 @@ const Header = () => {
                   id="basic-nav-dropdown"
                   className="me-3"
                 >
-                  <NavDropdown.Item>{t("header.s")}</NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => handleShow()}>{t("header.p")}</NavDropdown.Item>
                   <NavDropdown.Item onClick={() => handleLogout()}>
                   {t("header.l")}
                   </NavDropdown.Item>
@@ -92,6 +99,10 @@ const Header = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <Profile show={showModalProfile}
+             setShow={setShowModalProfile}
+    />
+    </>
   );
 };
 

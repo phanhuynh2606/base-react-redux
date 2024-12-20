@@ -36,5 +36,11 @@
       "password": "Mật khẩu",
       "username":"Tên người dùng",
       "signup": "Tạo tài khoản miễn phí"
+    },
+    "profile":{
+      "header": "Quản lý thông tin người dùng",
+      "text1": "Thông tin chính",
+      "text2": "Đổi mật khẩu",
+      "text3": "Lịch sử kiểm tra"
     }
 }

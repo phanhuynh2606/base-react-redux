@@ -8,7 +8,7 @@ const ModalResult = (props) => {
   const navigate = useNavigate();
   const handleClose = () => {
     setShow(false);
-    navigate("/users");
+    // navigate("/users");
   };
 
   return (
@@ -34,7 +34,10 @@ const ModalResult = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" >
+          <Button variant="primary" onClick={() =>{
+            handleClose();
+            props.handleShowAnswer();
+          }}>
             Show Answers
           </Button>
         </Modal.Footer>

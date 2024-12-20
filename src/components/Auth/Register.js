@@ -80,7 +80,7 @@ const Register = (props) => {
               }
           </div>
           <div className="form-group">
-            <label>{t("signup.title")} </label>
+            <label>{t("signup.username")} </label>
             <input
               type="text"
               name="username"

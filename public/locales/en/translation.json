@@ -35,6 +35,12 @@
     "password": "Password",
     "username": "Username",
     "signup": "Create a free account"
+  },
+  "profile":{
+    "header": "Manage Information User",
+    "text1": "Main Information",
+    "text2": "Change Password",
+    "text3": "History Exam"
   }
 
 }
